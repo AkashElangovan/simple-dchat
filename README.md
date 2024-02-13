@@ -29,11 +29,3 @@ Gun.js treats data as a graph, where nodes represent pieces of information and e
 
 Gun.js allows data to be stored and synchronized across devices without relying on a central server. This decentralized approach enhances scalability and resilience.
 
-## Simple Usage
-
-### 1. Installation
-
-Include Gun.js in your project:
-
-```html
-<script src="https://cdn.jsdelivr.net/npm/gun/gun.js"></script>
