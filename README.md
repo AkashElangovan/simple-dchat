@@ -21,11 +21,9 @@ Gun.js is a JavaScript library that simplifies real-time, decentralized data syn
 
 ## Key Concepts
 
-### 1. Graph Database
 
-Gun.js treats data as a graph, where nodes represent pieces of information and edges define relationships between them. This flexible structure enables easy modeling of complex data.
 
-### 2. Decentralized Architecture
+### 1. Decentralized Architecture
 
 Gun.js allows data to be stored and synchronized across devices without relying on a central server. This decentralized approach enhances scalability and resilience.
 
