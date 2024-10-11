@@ -3,89 +3,195 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Decentralized Chat</title>
+  <title>Decentralized Chat App</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f9;
+      font-family: 'Inter', sans-serif;
+      background-color: #1F1F1F;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      margin: 0;
+      color: #EAEAEA;
     }
+
     #chat-container {
+      display: flex;
+      flex-direction: column;
+      background: #292929;
+      border-radius: 20px;
       width: 100%;
-      max-width: 600px;
-      background: #fff;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      border-radius: 8px;
+      max-width: 500px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
       overflow: hidden;
     }
-    #messages {
-      padding: 20px;
-      height: 400px;
-      overflow-y: scroll;
-      border-bottom: 1px solid #ddd;
-    }
-    #messages div {
-      margin-bottom: 10px;
-      padding: 10px;
-      border-radius: 5px;
-    }
-    #input {
+
+    /* Navbar Section */
+    #navbar {
       display: flex;
-      padding: 10px;
-    }
-    #message {
-      flex: 1;
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      margin-right: 10px;
-    }
-    #send {
+      justify-content: space-between;
+      align-items: center;
+      background-color: #333;
       padding: 10px 20px;
-      border: none;
-      background-color: #28a745;
-      color: #fff;
-      border-radius: 4px;
-      cursor: pointer;
+      border-bottom: 1px solid #444;
     }
+
+    .username-display {
+      color: #EAEAEA;
+      font-size: 1.2rem;
+    }
+    
+    /* Login Section */
     #login {
       display: flex;
-      justify-content: center;
       padding: 20px;
+      background-color: #333;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #444;
     }
+
     #username {
       flex: 1;
       padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
+      border: none;
+      background-color: #444;
+      border-radius: 10px;
+      color: #fff;
       margin-right: 10px;
+      font-size: 1rem;
     }
+
     #login-button {
       padding: 10px 20px;
       border: none;
+      border-radius: 10px;
       background-color: #007bff;
-      color: #fff;
-      border-radius: 4px;
+      color: white;
+      font-size: 1rem;
       cursor: pointer;
+      transition: 0.3s;
+    }
+
+    #login-button:hover {
+      background-color: #0056b3;
+    }
+
+    /* Chat Messages Section */
+    #messages {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto; /* Enables vertical scrolling */
+      background-color: #1C1C1C;
+      display: flex;
+      flex-direction: column;
+      gap: 10px; /* Adds spacing between messages */
+      max-height: 400px; /* Set a max height to enable scrolling */
+    }
+
+    .message {
+      padding: 12px 18px;
+      border-radius: 15px;
+      font-size: 0.95rem;
+      color: #eaeaea;
+      max-width: 80%;
+      word-wrap: break-word;
+      display: inline-block;
+      position: relative; /* For pseudo-elements if needed */
+    }
+
+    .message.sent {
+      align-self: flex-end; /* Aligns to the right */
+      background-color: #4CAF50; /* Background color for sent messages */
+      color: white; /* Text color for sent messages */
+    }
+
+    .message.received {
+      align-self: flex-start; /* Aligns to the left */
+      background-color: #333; /* Background color for received messages */
+    }
+
+    /* Input Section */
+    #input {
+      display: flex;
+      padding: 15px;
+      background-color: #333;
+      border-top: 1px solid #444;
+    }
+
+    #message {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      background-color: #444;
+      color: #fff;
+      margin-right: 10px;
+      font-size: 1rem;
+    }
+
+    #send {
+      padding: 12px 20px;
+      background-color: #34D399;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    #send:hover {
+      background-color: #2BAE7F;
+    }
+
+    @media (max-width: 600px) {
+      #chat-container {
+        max-width: 90%;
+      }
+
+      #send, #login-button {
+        padding: 10px 15px;
+        font-size: 0.9rem;
+      }
+
+      #message, #username {
+        padding: 10px;
+        font-size: 0.9rem;
+      }
     }
   </style>
 </head>
 <body>
   <div id="chat-container">
+    <!-- Navbar Section -->
+    <div id="navbar">
+      <div class="username-display" id="username-display">Username: </div>
+    </div>
+
+    <!-- Login Section -->
     <div id="login">
       <input type="text" id="username" placeholder="Enter your username">
       <button id="login-button">Login</button>
     </div>
+
+    <!-- Messages Section -->
     <div id="messages"></div>
-    <div id="input">
-      <input type="text" id="message" placeholder="Type a message">
+
+    <!-- Input Section -->
+    <div id="input" style="display:none;">
+      <input type="text" id="message" placeholder="Type a message...">
       <button id="send">Send</button>
     </div>
   </div>
+
   <script src="https://cdn.jsdelivr.net/npm/gun/gun.js"></script>
   <script src="/chat.js"></script>
 </body>

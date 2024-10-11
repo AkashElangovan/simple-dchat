@@ -2,18 +2,18 @@ const express = require('express');
 const http = require('http');
 const Gun = require('gun');
 const path = require('path');
-//
+
 const app = express();
 const server = http.createServer(app);
-
-// Serve static files from the 'public' directory
-app.use(express.static(path.join(__dirname, 'public')));
-//
-// Initialize Gun
 const gun = Gun({ web: server });
 
-// Start the server
-const PORT = process.env.PORT || 3000;
+app.use(express.static(path.join(__dirname))); // Serve static files from the current directory
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+const PORT = process.env.PORT || 8080; // Change to 3001 or another unused port
+
 server.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
